@@ -93,3 +93,13 @@ def preprocessamento(texto):
 texto_teste = '@behin_d_curtain :D Para :( mim, http://www.iaexpert.com.br é precisamente o contrário :) Vem a chuva e vem a boa disposição :)'
 resultado = preprocessamento(texto_teste)
 resultado
+
+base_treinamento.head(10)
+
+base_treinamento['tweet_text'] = base_treinamento['tweet_text'].apply(preprocessamento)
+
+base_treinamento.head(10)
+
+base_teste['tweet_text'] = base_teste['tweet_text'].apply(preprocessamento)
+
+base_teste.head(10)
