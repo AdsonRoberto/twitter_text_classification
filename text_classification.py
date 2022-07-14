@@ -103,3 +103,22 @@ base_treinamento.head(10)
 base_teste['tweet_text'] = base_teste['tweet_text'].apply(preprocessamento)
 
 base_teste.head(10)
+
+exemplo_base_dados = [["este trabalho é agradável", {"POSITIVO": True, "NEGATIVO": False}],
+                      ["este lugar continua assustador", {"POSITIVO": False, "NEGATIVO": True}]]
+
+base_dados_treinamento_final = []
+for texto, emocao in zip(base_treinamento['tweet_text'], base_treinamento['sentiment']):
+  if emocao == 1:
+    dic = ({'POSITIVO': True, 'NEGATIVO': False})
+  elif emocao == 0:
+    dic = ({'POSITIVO': False, 'NEGATIVO': True})
+
+  base_dados_treinamento_final.append([texto, dic.copy()])
+
+len(base_dados_treinamento_final)
+
+base_dados_treinamento_final[10:15]
+
+base_dados_treinamento_final[45000:45005]
+
