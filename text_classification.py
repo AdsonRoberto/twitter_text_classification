@@ -156,3 +156,28 @@ plt.ylabel('Erro')
 
 modelo.to_disk("modelo")
 
+modelo_carregado = spacy.load('modelo')
+modelo_carregado
+
+texto_positivo = base_teste['tweet_text'][21]
+texto_positivo
+
+previsao = modelo_carregado(texto_positivo)
+previsao
+
+previsao.cats
+
+texto_positivo = 'eu gosto muito de você'
+texto_positivo = preprocessamento(texto_positivo)
+texto_positivo
+
+modelo_carregado(texto_positivo).cats
+
+base_teste['tweet_text'][4000]
+
+texto_negativo = base_teste['tweet_text'][4000]
+previsao = modelo_carregado(texto_negativo)
+previsao.cats
+
+
+
