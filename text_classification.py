@@ -122,3 +122,37 @@ base_dados_treinamento_final[10:15]
 
 base_dados_treinamento_final[45000:45005]
 
+modelo = spacy.blank('pt')
+categorias = modelo.create_pipe("textcat")
+categorias.add_label("POSITIVO")
+categorias.add_label("NEGATIVO")
+modelo.add_pipe(categorias)
+historico = []
+
+modelo.begin_training()
+for epoca in range(20):
+  random.shuffle(base_dados_treinamento_final)
+  losses = {}
+  for batch in spacy.util.minibatch(base_dados_treinamento_final, 512):
+    textos = [modelo(texto) for texto, entities in batch]
+    annotations = [{'cats': entities} for texto, entities in batch]
+    modelo.update(textos, annotations, losses=losses)
+    historico.append(losses)
+  if epoca % 5 == 0:
+    print(losses)
+
+historico_loss = []
+for i in historico:
+  historico_loss.append(i.get('textcat'))
+
+historico_loss = np.array(historico_loss)
+historico_loss
+
+import matplotlib.pyplot as plt
+plt.plot(historico_loss)
+plt.title('Progressão do erro')
+plt.xlabel('Batches')
+plt.ylabel('Erro')
+
+modelo.to_disk("modelo")
+
